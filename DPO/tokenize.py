@@ -5,6 +5,10 @@ from transformers import AutoTokenizer
 from args import Args
 args = Args()
 
+# 토크나이저 로드
+tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
+tokenizer.pad_token = tokenizer.eos_token # 패딩 토큰을 eos로
+
 def paired_data_preparation(
     data_dir = "nayohan/Neural-DPO-ko",
     sanity_check: bool = False,
@@ -45,11 +49,6 @@ def paired_data_preparation(
         num_proc=num_proc,
         remove_columns=original_columns,
     )
-
-
-# 토크나이저 로드
-tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
-tokenizer.pad_token = tokenizer.eos_token # 패딩 토큰을 eos로
 
 # 'train'밖에 없는 관계로 trian-test 나눠주기
 train_test_split = paired_data_preparation(data_dir= args.datapath).train_test_split(test_size=0.2)
