@@ -10,8 +10,8 @@ model = AutoModelForCausalLM.from_pretrained(
     low_cpu_mem_usage=True, # CPU 메모리 사용 최적화? 
     torch_dtype=torch.float16, # 16bit로 로드
     trust_remote_code=True, # 원격코드 신뢰..?  
-    device_map="balanced",
-    cache_dir=args.cache_dir)
+    device_map= None, # balanced
+    cache_dir=args.cache_dir).to("cpu")
 
 model.config.use_cache = False
 model.is_parallelizable = True

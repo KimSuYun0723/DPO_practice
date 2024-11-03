@@ -1,7 +1,7 @@
 from trl import DPOTrainer
 import os
 
-import tokenize
+from tokenize_dataset import train_dataset, eval_dataset, tokenizer
 from config import peft_config, training_args
 from model import model
 from args import Args
@@ -16,9 +16,9 @@ dpo_trainer = DPOTrainer(
     ref_model = None,   # ref 모델을 None으로 놓게 되면 SFT + adapter가 붙은 모델에서 adapter를 떼고, policy에 따른 최적화를 진행하게 됩니다. 두개의 모델을 로드할 필요가 없어 메모리 이득을 꾀할 수 있습니다.
     args = training_args,
     beta = args.beta,
-    train_dataset= tokenize.train_dataset,
-    eval_dataset = tokenize.eval_dataset,
-    tokenizer = tokenize.tokenizer,
+    train_dataset= train_dataset,
+    eval_dataset = eval_dataset,
+    tokenizer = tokenizer,
     peft_config = peft_config,
     max_prompt_length = args.max_prompt_length,
     max_length = args.max_length,
