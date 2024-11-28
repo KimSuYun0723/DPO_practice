@@ -1,0 +1,3 @@
+[submodule "easy_DPO"]
+	path = easy_DPO
+	url = https://github.com/KimSuYun0723/Easy_DPO.git
