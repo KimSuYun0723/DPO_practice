@@ -6,11 +6,12 @@ from args import Args
 args = Args()
 
 # 토크나이저 로드
-tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
-tokenizer.pad_token = tokenizer.eos_token # 패딩 토큰을 eos로
+model_id = 'Bllossom/llama-3.2-Korean-Bllossom-3B'
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+tokenizer.pad_token = tokenizer.eos_token
 
 def paired_data_preparation(
-    data_dir = "nayohan/Neural-DPO-ko",
+    data_dir = "C:\_SY\DPO_practice\llama3B_DPO\data\dataset", # 데이터 경로
     sanity_check: bool = False,
     cache_dir: str = None,
     split_criteria: str = "train",
@@ -35,7 +36,6 @@ def paired_data_preparation(
     if sanity_check:
         dataset = dataset.select(range(min(len(dataset), 500)))
 
-    # 함수내에 정의되는 함수로, 각 데이터 포맷과 구조에 맞게 매핑해주는 역할을 진행합니다.
     def return_prompt_and_responses(samples) -> Dict[str, str]:
         return {
             "prompt": ["###질문:\n" + question + "\n\n###답변:\n" for question in samples["question"]],
@@ -50,18 +50,16 @@ def paired_data_preparation(
         remove_columns=original_columns,
     )
 
-# 'train'밖에 없는 관계로 trian-test 나눠주기
-train_test_split = paired_data_preparation(data_dir= args.datapath).train_test_split(test_size=0.2)
-train_dataset = train_test_split['train']
-eval_dataset = train_test_split['test']
+dataset = paired_data_preparation(data_dir= args.datapath)
+split_data = dataset.train_test_split(test_size=0.2)
+train_dataset = split_data['train'] # 여기 수정 필요
+eval_dataset = split_data['test'] # 여기 수정 필요
 
-# 학습용 데이터셋
+# 학습/평가용 데이터셋 
 train_dataset = train_dataset.filter(
-    # 프롬프트+응답 길이 < max_length
     lambda x: len(x["prompt"]) + len(x["chosen"]) <= args.max_length
     and len(x["prompt"]) + len(x["rejected"]) <= args.max_length)
 
-# 평가 데이터셋
 eval_dataset = eval_dataset.filter(
     lambda x: len(x["prompt"]) + len(x["chosen"]) <= args.max_length
     and len(x["prompt"]) + len(x["rejected"]) <= args.max_length)

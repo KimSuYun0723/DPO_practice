@@ -17,5 +17,5 @@ if __name__ == '__main__':
 
     login(token=args.token_id)
 
-    dpo_trainer = DPOTrainer(args)  # 트레이너 인스턴스 생성
+    dpo_trainer = DPOTrainer(args)
     train(dpo_trainer, args)

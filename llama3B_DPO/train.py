@@ -1,7 +1,7 @@
 from trl import DPOTrainer
 import os
 
-from tokenize_dataset import train_dataset, eval_dataset, tokenizer
+from data.tokenize_dataset import train_dataset, eval_dataset, tokenizer
 from config import peft_config, training_args
 from model import model
 from args import Args
@@ -23,27 +23,6 @@ dpo_trainer = DPOTrainer(
     max_prompt_length = args.max_prompt_length,
     max_length = args.max_length,
 )
-
-"""dpo_trainer.py : 267 line
-if args.model_init_kwargs is None:
-    model_init_kwargs = {}
-elif not isinstance(model, str):
-    raise ValueError(
-        "You passed model_init_kwargs to the DPOTrainer/DPOConfig, but your model is already instantiated."
-    )
-else:
-    model_init_kwargs = args.model_init_kwargs
-    torch_dtype = model_init_kwargs.get("torch_dtype")
-    if torch_dtype is not None:
-        # Convert to `torch.dtype` if an str is passed
-        if isinstance(torch_dtype, str) and torch_dtype != "auto":
-            torch_dtype = getattr(torch, torch_dtype)
-        if torch_dtype != "auto" and not isinstance(torch_dtype, torch.dtype):
-            raise ValueError(
-                f"Invalid `torch_dtype` passed to the DPOConfig. Expected a string with either `torch.dtype` or 'auto', but got {torch_dtype}."
-            )
-        model_init_kwargs["torch_dtype"] = torch_dtype
-"""
 
 print("###################################################################################")
 print("########################  Trainin Process is preparing now  #######################")

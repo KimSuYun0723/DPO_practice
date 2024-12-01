@@ -13,7 +13,7 @@ peft_config = LoraConfig(
     task_type = "CAUSAL_LM") # Causal Language Model로 학습
 
 # 학습 인자 설정
-training_args = DPOConfig( # 수정 : model_init_kwargs 없음
+training_args = DPOConfig( # model_init_kwargs 없음
     num_train_epochs= args.num_epochs,
     per_device_train_batch_size = args.per_device_train_batch_size,
     per_device_eval_batch_size = args.per_device_eval_batch_size,
@@ -29,6 +29,6 @@ training_args = DPOConfig( # 수정 : model_init_kwargs 없음
     warmup_steps = args.warmup_steps,
     optim = args.optimizer_type,
     bf16 = True,
-    remove_unused_columns = False, # 사용되지 않는 열 제거 안 함
-    run_name = "dpo_SmalLM-135M",
+    remove_unused_columns = False,
+    run_name = "llama3B_dpo_1202",
 )
