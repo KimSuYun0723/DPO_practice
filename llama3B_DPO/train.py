@@ -1,7 +1,7 @@
 from trl import DPOTrainer
 import os
 
-from data.tokenize_dataset import train_dataset, eval_dataset, tokenizer
+from prepare_dataset import train_dataset, eval_dataset, tokenizer
 from config import peft_config, training_args
 from model import model
 from args import Args
