@@ -30,5 +30,5 @@ training_args = DPOConfig( # model_init_kwargs 없음
     optim = args.optimizer_type,
     bf16 = True,
     remove_unused_columns = False,
-    run_name = "llama3B_dpo_1202",
+    run_name = "llama3B_dpo_1209",
 )

@@ -5,7 +5,7 @@ from huggingface_hub import login
 from args import Args
 from train import train
 from args import Args
-from trl import DPOTrainer  # DPOTrainer는 필요한 모듈에서 가져옵니다.
+from trl import DPOTrainer
 
 
 if __name__ == '__main__':

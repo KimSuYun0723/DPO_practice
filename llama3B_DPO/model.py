@@ -1,21 +1,18 @@
 import torch
-from llama_cpp import Llama # install needed
-from transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from args import Args
 args = Args()
 
-# SFT MODEL : Llama-3B
-model = Llama( 
-    model_path='llama-3.2-Korean-Bllossom-3B-gguf-Q4_K_M.gguf'
-)
-"""model = AutoModelForCausalLM.from_pretrained(
+# MODEL : Llama-3.2B
+tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
+model = AutoModelForCausalLM.from_pretrained(
     args.model_name_or_path,
     low_cpu_mem_usage=True, 
-    torch_dtype=torch.float16, 
+    torch_dtype=torch.bfloat16, # llama3b 예시 기준.. easyDPO는 float16
     trust_remote_code=True, 
     device_map= "balanced",
-    cache_dir=args.cache_dir).to("cuda")"""
+    cache_dir=args.cache_dir).to("cuda:1")
 
 model.config.use_cache = False
 model.is_parallelizable = True

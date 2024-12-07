@@ -1,10 +1,18 @@
-from trl import DPOTrainer
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.chdir(os.path.dirname(os.path.abspath(__file__))) # 심볼릭 링크.. 누가 해둔걸까..
+# lrwxrwxrwx 1 nlpgpu8 nlpgpu8 19 Mar 21  2023 /home/nlpgpu8/hdd2 -> /media/nlpgpu8/hdd2
 
-from prepare_dataset import train_dataset, eval_dataset, tokenizer
+from trl import DPOTrainer
+
+from prepare_dataset import train_dataset, eval_dataset
 from config import peft_config, training_args
-from model import model
+from model import model, tokenizer
 from args import Args
+
+import wandb
+wandb.init(project="llama3B-DPO")
+
 args = Args()
 
 print("###################################################################################")

@@ -4,7 +4,7 @@ from typing import List
 @dataclass
 class Args:
     cache_dir: str = field(
-        default="C:\_SY\DPO_practice\llama3B_DPO\cache_dir"
+        default="/home/nlpgpu8/hdd2/suyun/DPO_practice/llama3B_DPO/cache_dir"
     )
     num_epochs: int = field(
         default=3  # 에포크 수
@@ -13,10 +13,10 @@ class Args:
         default=0.1  # DPO에서 사용할 beta값
     )
     datapath: str = field(
-        default="C:\_SY\DPO_practice\llama3B_DPO\data\dataset"
+        default="/home/nlpgpu8/hdd2/suyun/DPO_practice/llama3B_DPO/data/dataset"
     )
     model_name_or_path: str = field(
-        default="Bllossom/llama-3.2-Korean-Bllossom-3B-gguf-Q4_K_M"
+        default="Bllossom/llama-3.2-Korean-Bllossom-3B"
     )
     learning_rate: float = field(
         default=1e-4
@@ -37,13 +37,13 @@ class Args:
         default="paged_adamw_32bit" 
     )
     per_device_train_batch_size: int = field(
-        default=4
+        default=8
     )
     per_device_eval_batch_size: int = field(
-        default=1
+        default=4
     )
     gradient_accumulation_steps: int = field(
-        default=8
+        default=4
     )
     gradient_checkpointing: bool = field(
         default=True  
@@ -67,16 +67,16 @@ class Args:
         default=500
     )
     logging_steps: int = field(
-        default=10
+        default=100
     )
     save_steps: int = field(
-        default=50
+        default=500
     )
     eval_steps: int = field(
-        default=50
+        default=500
     )
     output_dir: str = field(
-        default="C:\_SY\DPO_practice\llama3B_DPO\output_dir"
+        default="/home/nlpgpu8/hdd2/suyun/DPO_practice/llama3B_DPO/output_dir"
     )
     log_freq: int = field(
         default=1
